@@ -6,7 +6,9 @@ namespace Assignment3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var input = new Uri ("https://github.com");
+
+            Console.WriteLine(input.ToString());
         }
     }
 }
