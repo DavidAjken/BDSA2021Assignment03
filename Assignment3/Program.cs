@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Linq;
 
-namespace Assignment3
+namespace BDSA2020.Assignment03
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var input = new Uri ("https://github.com");
-
-            Console.WriteLine(input.ToString());
+            var wizards = Wizard.Wizards;
+            var carectors = from w in wizards.Value
+                            where w.Creator.Contains("Rowling")
+                            select w.Name;
+            foreach (var w in carectors)
+            {
+                Console.WriteLine(w);
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using Xunit;
 using System.Collections.Generic;
 using static System.Console;
 
-namespace BDSA2020.Assignment02.Tests
+namespace BDSA2020.Assignment03.Tests
 {
     public class ExtensionsTests
     {

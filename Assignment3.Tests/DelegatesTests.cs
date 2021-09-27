@@ -4,7 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using static System.Console;
 
-namespace BDSA2020.Assignment02.Tests
+
+namespace BDSA2020.Assignment03.Tests
 {
     public class DelegatesTests
     {
@@ -13,9 +14,13 @@ namespace BDSA2020.Assignment02.Tests
         [InlineData("Lorem Ipsum er fylde text", "txet edlyf re muspI meroL")]
        public void ReverseString(string input, string expected)
         {
-            Func<string,string> Reverse = s => s.ToCharArray().Reverse().ToString();
+            Func<string,string> Reverse = s => {
+                var testArray = s.ToCharArray(); 
+                Array.Reverse(testArray);
+                return new string(testArray);
+            };
         
-            //WriteLine(Reverse(input));
+            WriteLine(Reverse(input));
             var actual = Reverse(input);
 
             Assert.Equal(expected, actual);
