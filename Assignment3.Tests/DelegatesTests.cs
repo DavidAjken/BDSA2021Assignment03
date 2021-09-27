@@ -45,7 +45,7 @@ namespace BDSA2020.Assignment03.Tests
         [InlineData("1234", 1234)]
         [InlineData("000020000", 20000)]
         [InlineData("create error", null)] 
-        //delegate canot handle any string not in the right formate when converting
+       
          public void stringToInt(string input, int? expected)
         {
             Func<string,int?> StringToIntConverter = s => Int32.TryParse(s, out int a) ? Convert.ToInt32(s) : null;
