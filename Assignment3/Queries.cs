@@ -10,44 +10,68 @@ namespace BDSA2020.Assignment03
     public class Queries
     {
          
-        public static IEnumerable<string> WizardsByCreator1<Wizard>(string CreatorName,IEnumerable<Wizard> input){
-           var carectors =  from i in input
-                            where i.Creator.get().Contains(CreatorName)
-                            select i.Name;
-
-            return carectors;
+        public static IEnumerable<string> WizardsByCreator1(string creatorName, IEnumerable<Wizard> input){
+            var characters = (from inp in input
+                             where inp.Creator.Contains(creatorName)
+                             select inp.Name).Distinct();
+            foreach (var charector in characters)
+            {
+                yield return charector;
+            }
         }
         
-        // public static IEnumerable<string> WizardsByCreator2<Wizard>(string CreatorName,IEnumerable<Wizard> input){
-        //     var ca = input.where(i => i.Creator.Contains(CreatorName));
-        //     foreach (var cName in ca)
-        //     {
-        //         yield return cName.Name;
-        //     }
-        // }
-        // public static int FirstYearAppearanceOf1<Wizard>(string carectorName,IEnumerable<Wizard> input){
-        //     var year = from i in input
-        //                where i.Name.Equal(carectorName)
-        //                select i.Year;
+        public static IEnumerable<string> WizardsByCreator2(string creatorName, IEnumerable<Wizard> input){
+            return input.Where(inp => inp.Creator.Contains(creatorName)).Select(inp => inp.Name).Distinct();
+        }
 
-        //     return year;
-        // }
+        public static int FirstYearAppearanceOf1(string charactersName,IEnumerable<Wizard> input){
+            var year = from inp in input
+                       where inp.Name.Contains(charactersName)
+                       orderby inp.Year ascending 
+                       select inp.Year;
+
+            return (int)year.First();
+        }
        
-        // public static int FirstYearAppearanceOf2<T>(string name,IEnumerable<T> input){
-        //     throw new NotImplementedException();
-        // }
-        // public static IEnumerable<(string,int)> NameAndYearFromMedium1<T>(string SeriesName,IEnumerable<T> input){
-        //     throw new NotImplementedException();
-        // }
-        // public static IEnumerable<(string,int)> NameAndYearFromMedium2<T>(string SeriesName,IEnumerable<T> input){
-        //     throw new NotImplementedException();
-        // }
-        // public static IEnumerable<(string,string)> AllWizardsWithCreatorInReversOrder1<T>(IEnumerable<T> input){
-        //     throw new NotImplementedException();
-        // }
-        // public static IEnumerable<(string,string)> AllWizardsWithCreatorInReversOrder2<T>(IEnumerable<T> input){
-        //     throw new NotImplementedException();
-        // }
-        // */
+        public static int? FirstYearAppearanceOf2(string charactersName, IEnumerable<Wizard> input){
+            return input.Where(inp => inp.Name.Contains(charactersName)).OrderBy(inp => inp.Year).First().Year;
+        }
+
+        public static IEnumerable<(string,int?)> NameAndYearFromMedium1(string seriesName, IEnumerable<Wizard> input){
+            var seriescharacters = (from inp in input
+                                   where inp.Medium.Equals(seriesName)
+                                   select new{inp.Name, inp.Year}).Distinct();
+            foreach (var characters in seriescharacters)
+            {
+               yield return new (characters.Name, characters.Year);
+            }
+        }
+
+        public static IEnumerable<(string,int?)> NameAndYearFromMedium2(string seriesName, IEnumerable<Wizard> input){
+            var seriescharacters = input.Where(inp=>inp.Medium.Equals(seriesName)).Select(inp => new{inp.Name, inp.Year}).Distinct();
+            foreach (var characters in seriescharacters)
+            {
+               yield return new (characters.Name, characters.Year);
+            }
+        }
+
+        public static IEnumerable<(string,string)> AllWizardsWithcharactersInReversOrder1(IEnumerable<Wizard> input){
+            var characterCreatorPair = (from inp in input
+                                       orderby inp.Creator descending
+                                       select new{inp.Creator,inp.Name}).Distinct();
+            foreach (var pair in characterCreatorPair)
+            {
+                yield return new (pair.Creator, pair.Name);
+            }
+        }
+
+        public static IEnumerable<(string,string)> AllWizardsWithcharactersInReversOrder2(IEnumerable<Wizard> input){
+            var characterCreatorPair = input.OrderByDescending(inp => inp.Creator).Select(inp => new{inp.Creator,inp.Name}).Distinct();
+            foreach (var pair in characterCreatorPair)
+            {
+                yield return new (pair.Creator, pair.Name);
+            }        
+        }
+        
     }
 }
