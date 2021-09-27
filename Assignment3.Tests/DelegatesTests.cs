@@ -34,5 +34,21 @@ namespace BDSA2020.Assignment02.Tests
         //Then
             Assert.Equal(expected,actual);
         }
+
+         [Theory]
+        [InlineData("0042", 42)]
+        [InlineData("1234", 1234)]
+         [InlineData("000020000", 20000)]
+        // [InlineData("create error", null)] 
+        //delegate canot handle any string not in the right formate when converting
+         public void stringToInt(string input, int expected)
+        {
+         Func<string,int> StringToIntConverter = s => Convert.ToInt32(s);
+        
+    
+            var actual = StringToIntConverter(input);
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
